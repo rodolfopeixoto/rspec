@@ -1,14 +1,22 @@
 require 'calculator'
 
 describe Calculator do
-  it 'sum method for 2 numbers' do
-    calc = Calculator.new
-    result = calc.sum(5,7)
-    expect(result).to eq(12)
-  end
-  it 'use sum method for 2 numbers with negative numbers' do
-    calc = Calculator.new
-    result = calc.sum(-5,7)
-    expect(result).to eq(2)
+  # method class sum #  | methods of instance .sum(self.sum)
+  context '#sum' do
+    it 'positive numbers' do
+      calc = Calculator.new
+      result = calc.sum(5,7)
+      expect(result).to eq(12)
+    end
+    it 'with negative and positive numbers' do
+      calc = Calculator.new
+      result = calc.sum(-5,7)
+      expect(result).to eq(2)
+    end
+    it 'with negative numbers' do
+      calc = Calculator.new
+      result = calc.sum(-5,-7)
+      expect(result).to eq(-12)
+    end
   end
 end
