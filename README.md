@@ -388,20 +388,59 @@ Verificar se no fim tem uma palavra ou verificar se o ultimo elemento é o esper
 
 *** Matchers de class e tipos (be_instance_of, be_kind_of respond_to, be_a, be_an) ***
 
+*** be_instance_of ***
+
+Deve ser exatamento da classe
 
 ```
-```
-
-
-
-
-*** ***
-
-```
+  it 'be_instance_of' do
+    expect(10).to be_instance_of(Integer) # Exatamente a classe
+  end
 ```
 
 
+*** be_kind_of ***
 
+Pode ser de uma herança de classe também exemplo: class StringNew < String end
+
+```
+  it 'be_kind_of' do
+    expect(10).to be_kind_of(Integer) # Pode ser por herança
+  end
+```
+
+
+*** respond_to ***
+
+Verifica se o valor responde a um método
+
+```
+  it 'respond_to' do
+    expect('ruby').to respond_to(:size) # Respond ao método size
+    expect('ruby').to respond_to(:count) # Respond ao método count
+  end
+```
+
+*** be_a ***
+
+Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o be_a
+
+```
+  it 'be_a' do
+    expect(10).to be_a(Integer) # Pode ser por herança
+  end
+```
+
+*** be_an ***
+
+Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o be_an
+
+
+```
+  it 'be_an' do
+    expect(10).to be_an(Integer) # Pode ser por herança
+  end
+```
 
 ### Links diretos:
 
