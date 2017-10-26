@@ -212,14 +212,24 @@ Testa se é o valor é o mesmo
 
 *** be true ***
 
+espera que seja verdadeiro o valor
+
 ```
+  it 'be true' do
+    expect(1.odd?).to be true 
+  end
 
 ```
 
 
 *** be false ***
 
+espera que seja falso o valor
+
 ```
+  it 'be false' do
+    expect(1.even?).to be false
+  end
 
 ```
 
@@ -227,23 +237,171 @@ Testa se é o valor é o mesmo
 
 *** be_truthy ***
 
-```
+espera que o valor seja verdadeiro
 
+```
+  it 'be_truthy' do
+    expect(1.odd?).to be_truthy 
+  end
 ```
 
 
 *** be_falsey ***
 
+espera que o valor seja falso
+
 ```
+  it 'be_falsey' do
+    expect(1.even?).to be_falsey
+  end
 
 ```
 
 
 *** be nil ***
 
-```
+espera que a variavel está vazia (nil)
 
 ```
+it 'be_nil' do
+  expect(defined? x).to be_nil
+end
+```
+
+*** Marchers comparison ***
+
+*** be > 1 ***
+
+Methcer maior ( > )
+
+```
+  it '>' do
+    expect(5).to be > 1
+  end
+```
+
+
+***be >= ***
+
+Matcher maior ou igual (>=)
+
+```
+
+  it '>=' do
+    expect(5).to be >= 2
+    expect(5).to be >= 5
+  end
+```
+
+
+*** be < ***
+
+Matcher menor (<)
+
+```
+  it '<' do
+    expect(5).to be < 12
+    expect(5).to be < 5
+  end
+```
+
+
+*** be <=  ***
+
+Matcher menor ou igual
+
+```
+  it '<=' do
+    expect(5).to be <= 12
+    expect(5).to be <= 5
+  end
+```
+
+
+
+
+*** be_between ***
+
+deve estar entre um valor min e max ( que contam, inclisive)
+
+```
+  it 'be_between inclusive' do
+    expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+    expect(2).to be_between(2,7).inclusive
+    expect(7).to be_between(2,7).inclusive
+  end
+
+```
+
+ou 
+
+deve estar entre um range min e max ( que não irão contar, exclusive)
+
+```
+  it 'be_between exclusive' do
+    expect(5).to be_between(2,7).exclusive # 2 e 7 não contam
+    expect(3).to be_between(2,7).exclusive
+    expect(6).to be_between(2,7).exclusive
+  end
+```
+
+
+*** Match para usar regex ***
+
+Podemos verificar através de expressão regular
+
+```
+  it 'match' do
+    expect('fulano@com.br').to match(/..@../)
+  end
+
+```
+
+
+*** start_with  ***
+
+Verificar se no inicio tem uma palavra ou verificar se o primeiro elemento é o esperado.
+
+```
+  it 'start_with' do
+    expect('fulano de tal').to start_with('fulano')
+    expect([1,2,3]).to start_with(1)
+  end
+```
+
+
+
+
+*** end_with ***
+
+Verificar se no fim tem uma palavra ou verificar se o ultimo elemento é o esperado.
+
+```
+  it 'end_with' do
+    expect('Fulano de tal').to end_with('tal')
+    expect([2,4,6]).to end_with(6)
+  end
+```
+
+
+
+
+*** Matchers de class e tipos (be_instance_of, be_kind_of respond_to, be_a, be_an) ***
+
+
+```
+```
+
+
+
+
+*** ***
+
+```
+```
+
+
+
 
 ### Links diretos:
 
