@@ -1,3 +1,5 @@
+require 'calculator'
+
 describe Calculator do
   # method class sum #  | methods of instance .sum(self.sum)
   context '#sum' do
@@ -15,6 +17,15 @@ describe Calculator do
     it 'with negative numbers' do
       result = calc.sum(-5,-7)
       expect(result).to eq(-12)
+    end
+  end
+  
+   context '#div' do
+    it "divide by 0" do
+      expect{subject.div(3,0)}.to raise_error(ZeroDivisionError)
+      expect{subject.div(3,0)}.to raise_error("divided by 0")
+      expect{subject.div(3,0)}.to raise_error(ZeroDivisionError,"divided by 0")
+      expect{subject.div(3,0)}.to raise_error(/divided/) #regular expression
     end
   end
 end

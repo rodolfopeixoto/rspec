@@ -519,6 +519,125 @@ end
 ```
 
 
+#### Matchers of Errors
+
+**raise_exception**
+
+Caso queira pegar um error, no exemplo o Ruby 10 / 0 é um error. Então, podemos
+verificar, porém como já é um error da classe não podemos usar o **expect().to** <~ com parênteses, devemos
+utilizar o **expect{}.to**, pois conseguiremos comparar o error, antes que ele lance uma exception.
+
+Mesmo que tenha um error o **expect{}.to** vai fazer o parse e vai comparar com o **raise_exception**.
+
+```
+require 'calculator'
+
+describe Calculator do
+  # method class sum #  | methods of instance .sum(self.sum)
+  context '#sum' do
+
+    subject(:calc) { described_class.new() }
+
+    it 'positive numbers' do
+      result = calc.sum(5,7)
+      expect(result).to eq(12)
+    end
+    it 'with negative and positive numbers' do
+      result = calc.sum(-5,7)
+      expect(result).to eq(2)
+    end
+    it 'with negative numbers' do
+      result = calc.sum(-5,-7)
+      expect(result).to eq(-12)
+    end
+  end
+  
+   context '#div' do
+    it "divide by 0" do
+      expect{subject.div(3,0)}.to raise_exception
+    end
+  end
+end
+```
+
+Podemos usar o **raise_error(TipoDoError)**
+
+por exemplo:
+
+```
+require 'calculator'
+
+describe Calculator do
+  # method class sum #  | methods of instance .sum(self.sum)
+  context '#sum' do
+
+    subject(:calc) { described_class.new() }
+
+    it 'positive numbers' do
+      result = calc.sum(5,7)
+      expect(result).to eq(12)
+    end
+    it 'with negative and positive numbers' do
+      result = calc.sum(-5,7)
+      expect(result).to eq(2)
+    end
+    it 'with negative numbers' do
+      result = calc.sum(-5,-7)
+      expect(result).to eq(-12)
+    end
+  end
+  
+   context '#div' do
+    it "divide by 0" do
+      expect{subject.div(3,0)}.to raise_error(ZeroDivisionError)
+    end
+  end
+end
+```
+
+Algumas possibilidades para testar o erro:
+
+* Expressão Regular
+* Tipo do error
+* Mensagem do erro
+
+```
+   context '#div' do
+    it "divide by 0" do
+      expect{subject.div(3,0)}.to raise_error(ZeroDivisionError)
+      expect{subject.div(3,0)}.to raise_error("divided by 0")
+      expect{subject.div(3,0)}.to raise_error(ZeroDivisionError,"divided by 0")
+      expect{subject.div(3,0)}.to raise_error(/divided/) #regular expression
+    end
+  end
+```
+
+
+#### About describe
+
+```
+# describe 'description' do
+#   it 'String' do
+#     str = "rodolfo"
+#     expect(str.size).to eq(7)
+#   end
+# end
+
+# 'Rodolfo' é instânciado como uma string, logo nosso subject é uma string
+
+describe 'Rodolfo' do
+  it 'String' do
+      expect(subject.size).to eq(7)
+  end
+end
+
+describe [1,2] do
+    it 'Array' do
+        expect(subject).to be_kind_of(Array)
+    end
+end
+```
+
 ### Links diretos:
 
 
