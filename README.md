@@ -710,6 +710,41 @@ describe (1..5), 'Ranges' do
 end
 ```
 
+
+#### Composição de expectativas (or / and)
+Caso queira fazer uma composição, basta usar o **or** ou **and**
+
+```
+describe 'Ruby on Rails' do
+  it { is_expected.to starting_with('Ruby').and ending_with('Rails') }
+  it { expect(fruit).to eq('banana').or eq('orange').or eq('grape') }
+
+  def fruit
+    %w(banana orange grape).sample #sorteia
+  end
+end
+```
+
+#### Collections matcher (all)
+
+```
+describe [1,7,9], "Array" do
+ it { is_expected.to all (be_odd).and be_an(Integer) }
+ it { expect(['ruby','rails']).to all(be_a(String).and include('r')) }
+end
+
+# Nas collection você o all para verificar se todas as colleções são alguma coisa.
+
+# Espera que todos os elementos sejam string e tenha a letra r em qualquer lugar.
+# it { expect(['ruby','rails']).to all(be_a(String).and include('r')) }
+``` 
+
+**be_within**
+
+É utilizado para trabalhar com números com casas decimais.
+
+
+
 ### Links diretos:
 
 
