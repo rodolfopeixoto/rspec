@@ -43,7 +43,7 @@ No arquivo .rspec basta adicionar
 describe Calculor: Busca a classe e instância. 
 subject = Calculator.new
 
-*** Antes: ***
+**Antes:**
 
 ```
 describe Calculator do
@@ -70,7 +70,7 @@ end
 ```
 
 
-*** Depois: ***
+**Depois:**
 
 ```
 describe Calculator do
@@ -159,7 +159,7 @@ expect(subject).to eq(1)
 expect(subject).not_to eq(1)
 ```
 
-*** equal ***
+**equal**
 O matcher equal testar se o objeto x é igual ao objeto y.
 
 ```
@@ -171,7 +171,7 @@ O matcher equal testar se o objeto x é igual ao objeto y.
   end
 ```
 
-*** be ***
+**be**
 
 Testa se é o mesmo objeto
 
@@ -185,7 +185,7 @@ Testa se é o mesmo objeto
   end
 ```
 
-*** eql ***
+**eql**
 
 Testa se os valores são iguais.
 
@@ -197,7 +197,7 @@ Testa se os valores são iguais.
   end
 ```
 
-*** eq ***
+**eq**
 Testa se é o valor é o mesmo
 ```
   it '#eq - Testa se é o valor é o mesmo' do
@@ -207,10 +207,10 @@ Testa se é o valor é o mesmo
   end
 ```
 
-*** be true, be false, be_truthy, be_falsey, be nil ***
+**be true, be false, be_truthy, be_falsey, be nil**
 
 
-*** be true ***
+**be true**
 
 espera que seja verdadeiro o valor
 
@@ -222,7 +222,7 @@ espera que seja verdadeiro o valor
 ```
 
 
-*** be false ***
+**be false**
 
 espera que seja falso o valor
 
@@ -235,7 +235,7 @@ espera que seja falso o valor
 
 
 
-*** be_truthy ***
+**be_truthy**
 
 espera que o valor seja verdadeiro
 
@@ -246,7 +246,7 @@ espera que o valor seja verdadeiro
 ```
 
 
-*** be_falsey ***
+**be_falsey**
 
 espera que o valor seja falso
 
@@ -258,7 +258,7 @@ espera que o valor seja falso
 ```
 
 
-*** be nil ***
+**be nil**
 
 espera que a variavel está vazia (nil)
 
@@ -268,9 +268,9 @@ it 'be_nil' do
 end
 ```
 
-*** Marchers comparison ***
+**Marchers comparison**
 
-*** be > 1 ***
+**be > 1**
 
 Methcer maior ( > )
 
@@ -281,7 +281,7 @@ Methcer maior ( > )
 ```
 
 
-***be >= ***
+**be >=**
 
 Matcher maior ou igual (>=)
 
@@ -294,7 +294,7 @@ Matcher maior ou igual (>=)
 ```
 
 
-*** be < ***
+**be <**
 
 Matcher menor (<)
 
@@ -306,7 +306,7 @@ Matcher menor (<)
 ```
 
 
-*** be <=  ***
+**be <=**
 
 Matcher menor ou igual
 
@@ -320,7 +320,7 @@ Matcher menor ou igual
 
 
 
-*** be_between ***
+**be_between**
 
 deve estar entre um valor min e max ( que contam, inclisive)
 
@@ -346,7 +346,7 @@ deve estar entre um range min e max ( que não irão contar, exclusive)
 ```
 
 
-*** Match para usar regex ***
+**Match para usar regex**
 
 Podemos verificar através de expressão regular
 
@@ -358,7 +358,7 @@ Podemos verificar através de expressão regular
 ```
 
 
-*** start_with  ***
+**start_with**
 
 Verificar se no inicio tem uma palavra ou verificar se o primeiro elemento é o esperado.
 
@@ -372,7 +372,7 @@ Verificar se no inicio tem uma palavra ou verificar se o primeiro elemento é o 
 
 
 
-*** end_with ***
+**end_with**
 
 Verificar se no fim tem uma palavra ou verificar se o ultimo elemento é o esperado.
 
@@ -386,7 +386,7 @@ Verificar se no fim tem uma palavra ou verificar se o ultimo elemento é o esper
 
 
 
-*** Matchers de class e tipos (be_instance_of, be_kind_of respond_to, be_a, be_an) ***
+**Matchers de class e tipos (be_instance_of, be_kind_of respond_to, be_a, be_an)**
 
 *** be_instance_of ***
 
@@ -399,7 +399,7 @@ Deve ser exatamento da classe
 ```
 
 
-*** be_kind_of ***
+**be_kind_of**
 
 Pode ser de uma herança de classe também exemplo: class StringNew < String end
 
@@ -410,7 +410,7 @@ Pode ser de uma herança de classe também exemplo: class StringNew < String end
 ```
 
 
-*** respond_to ***
+**respond_to**
 
 Verifica se o valor responde a um método
 
@@ -421,7 +421,7 @@ Verifica se o valor responde a um método
   end
 ```
 
-*** be_a ***
+**be_a**
 
 Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o be_a
 
@@ -431,7 +431,7 @@ Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o 
   end
 ```
 
-*** be_an ***
+**be_an**
 
 Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o be_an
 
@@ -440,6 +440,14 @@ Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o 
   it 'be_an' do
     expect(10).to be_an(Integer) # Pode ser por herança
   end
+```
+
+**have_attributes**
+
+Para testar os atributos de uma classe é necessário utilizar o have_attributes
+
+```
+
 ```
 
 ### Links diretos:
