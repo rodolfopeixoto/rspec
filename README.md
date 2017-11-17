@@ -446,9 +446,78 @@ Segue os principios de be_kind_of, mas para escrever da forma correta utiliza o 
 
 Para testar os atributos de uma classe é necessário utilizar o have_attributes
 
+Utilizado para verificar se o atributo existe.
+```
+require 'person'
+
+describe 'Attributes' do
+  it 'have_attributes' do
+    person = Person.new
+    person.name = 'Rodolfo'
+    expect(person).to have_attributes(name: 'Rodolfo')
+  end
+end
 ```
 
+Outra opção é fazer algumas validações:
+
 ```
+describe 'Attributes' do
+  it 'have_attributes' do
+    person = Person.new
+    person.name = 'Rodolfo'
+    person.age = 25
+    # expect(person).to have_attributes(name: 'Rodolfo')
+    expect(person).to have_attributes(name: starting_with("R"), age: (be >= 25))
+  end
+end
+
+class Person
+    attr_accessor :name, :age
+end
+```
+
+Você poderá ter algumas variações para melhorar a leitura(verboso), como por exemplo:
+
+```
+  expect(person).to have_attributes(name: a_string_starting_with("R"), age: (a_value >= 25))
+```
+
+Link com as methods alias:
+[Alias Methods](https://gist.github.com/JunichiIto/f603d3fbfcf99b914f86)
+
+
+#### Matchers Predicados
+
+São métodos que ao ler lhe da uma intenção, por exemplo:
+
+```
+  12.odd?
+  => false
+  12.even?
+  => true
+  12.nil?
+  => false
+  12.nonzero?
+  => false
+```
+
+**be_(method predicate)**
+
+Colocando o be_ poderemos utilizar qualquer método predicado.
+exemplo:
+
+```
+describe 'Predicate' do
+  it 'odd' do
+    expect(1).to be_odd 
+  end
+  it 'even' do
+    expect(1).not_to be_even 
+  end
+end
+```
+
 
 ### Links diretos:
 
