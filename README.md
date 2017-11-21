@@ -744,6 +744,84 @@ end
 É utilizado para trabalhar com números com casas decimais.
 
 
+**satisfy**
+É uma método muito flexivel, porém a desvantagem é que não a leitura do test não fica tão clara.
+
+```
+describe 'Satisfy' do
+  it { expect(10).to satisfy { |x| x % 2 == 0 }}
+  it { 
+       expect(9).to satisfy('be a multiple of 3') do |x| 
+         x % 3 == 0 
+       end
+      }
+end
+
+```
+
+
+#### HOOKS (before after)
+
+**before(:suite)**
+Antes de toda a suite de testes
+
+**after(:suite)**
+Depois de toda a suite de testes
+
+spec_helper.rb
+
+```
+  config.before(:suite) do
+    puts ">>>>>>>>>>>>>>>>>>>>> ANTES DE TODA A SUÍTE DE TESTES"
+  end
+```
+
+
+**before(:all)** ou **before(:context)**
+Antes de todos os testes por contexto(describe é um contexto)
+
+**after(:all)** ou **after(:context)**
+Depois de todos os testes por contexto(describe é um contexto)
+
+
+spec_helper.rb
+
+```
+RSpec.configure do |config|
+  config.before(:suite) do
+    puts ">>>>>>>>>>>>>>>>>>>>> ANTES DE TODA A SUÍTE DE TESTES"
+  end
+
+  config.after(:suite) do
+    puts ">>>>>>>>>>>>>>>>>>>>> AFTER DE TODA A SUÍTE DE TESTES"
+  end
+  config.before(:context) do
+    puts ">>>>>>>>>>>>>>>>>>>>> ANTES DE TODOS OS TESTES"
+  end
+
+  config.after(:context) do
+    puts ">>>>>>>>>>>>>>>>>>>>> AFTER DE TODOS OS TESTES"
+  end
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+end
+
+```
+
+
+**before(:each)** ou **before(:example)**
+Antes de cada teste
+
+**after(:each)** ou **after(:example)**
+Depois de cada teste
+
+
 
 ### Links diretos:
 
