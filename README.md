@@ -822,6 +822,133 @@ Antes de cada teste
 Depois de cada teste
 
 
+**around(:each)**
+
+Para não utilizar o after e o before juntos, basta usar o around colocando o
+teste antes, test.run, logo depois o outro test.
+
+```
+  around(:each) do |test|
+    puts "ANTES"
+    @person = Person.new
+
+    test.run # roda o teste
+    
+    @person.name = "No name!"
+    puts "Depois >>>>>> #{@person.inspect}"
+
+  end
+```
+
+**let()** e **let!()**
+
+É um Helper methods arbitrário e no módulo. Você poderá adicionar no
+describe ou no module.
+Quando você precisar attribuir uma variável, ao invés de usar um bloco before para criar uma variável de instância, use let.
+
+Ao usar let, a variável é carregada apenas quando ela é utilizada pela primeira vez no teste e fica na cache até o teste em questão terminar.
+
+
+A diferença abaixo:
+
+Com uma variável de instância e before
+
+
+```
+require 'person'
+
+describe 'Attributes' do
+#   before(:each) do
+#     @person = Person.new
+#   end
+
+  let(:person) { Person.new }
+
+  it 'have_attributes' do
+    @person.name = 'Rodolfo'
+    @person.age = 25
+    # expect(@person).to have_attributes(name: 'Rodolfo')
+    expect(@person).to have_attributes(name: starting_with("R"), age: (be >= 25))
+  end
+  it 'have_attributes' do
+    @person.name = 'Ramon'
+    @person.age = 25
+    # expect(@person).to have_attributes(name: 'Rodolfo')
+    expect(@person).to have_attributes(name: starting_with("R"), age: (be >= 25))
+  end
+end
+```
+
+Utilizando o **let**
+
+
+```
+require 'person'
+
+describe 'Attributes' do
+#   before(:each) do
+#     @person = Person.new
+#   end
+
+  let(:person) { Person.new }
+
+  it 'have_attributes' do
+    person.name = 'Rodolfo'
+    person.age = 25
+    # expect(person).to have_attributes(name: 'Rodolfo')
+    expect(person).to have_attributes(name: starting_with("R"), age: (be >= 25))
+  end
+  it 'have_attributes' do
+    person.name = 'Ramon'
+    person.age = 25
+    # expect(person).to have_attributes(name: 'Rodolfo')
+    expect(person).to have_attributes(name: starting_with("R"), age: (be >= 25))
+  end
+end
+```
+
+Verificando o funcionamento do let:
+
+```
+$counter = 0
+
+describe "let" do
+  let(:count) { $counter += 1 }
+
+  it "memorizar o valor" do
+    expect(count).to eq(1) #1a vez 
+    expect(count).to eq(1) #2a cache
+  end
+
+  it "não é cacheado entre os testes" do
+    expect(count).to eq(2) #instância então será 2.
+  end
+end
+```
+
+**let**
+Utilizando o **let!**(bang)
+
+O let! é um let com um **before**
+
+```$count = 0
+
+describe "let!" do
+  let!(:contador) do
+    ordem_de_invocacao << :let!
+    $count += 1
+  end
+
+  # roda o teste do let! novamente
+  it "chama o método helper antes do teste" do
+    ordem_de_invocacao << :exemplo
+    expect(ordem_de_invocacao).to eq([:let!, :exemplo])
+    expect(contador).to eq(1)
+  end
+
+end
+
+```
 
 ### Links diretos:
 

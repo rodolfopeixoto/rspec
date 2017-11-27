@@ -8,6 +8,18 @@ describe 'Attributes' do
   after(:each) do
     puts ">>>>> Depois de cada teste"
   end
+
+  around(:each) do |test|
+    puts "ANTES"
+    @person = Person.new
+
+    test.run # roda o teste
+    
+    @person.name = "No name!"
+    puts "Depois >>>>>> #{@person.inspect}"
+
+  end
+
   it 'have_attributes' do
     @person.name = 'Rodolfo'
     @person.age = 25
