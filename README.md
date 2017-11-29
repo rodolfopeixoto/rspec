@@ -950,6 +950,169 @@ end
 
 ```
 
+**change**
+
+Utilizamos o matcher change para quando um valor é modificado, como no exemplo abaixo:
+
+change { code }
+
+change { code }.by(x)
+
+change { code }.from(x).to(y)
+
+```
+require 'count'
+
+describe "Matcher change" do
+  it { expect{Count.increment}.to change { Count.quantity } }
+  it { expect{Count.increment}.to change { Count.quantity }.by(1) }
+  it { expect{Count.increment}.to change { Count.quantity }.from(2).to(3) }
+end
+
+```
+
+
+```
+class Count
+
+    @quantity = 0
+
+    def self.quantity
+      @quantity  
+    end
+
+    def self.increment
+      @quantity += 1
+    end
+
+end
+```
+
+**output**
+
+É utilizado para testar as saídas padrões do sistema. Em Ruby você poderá usar as saídas:
+**print**, **warn** e **puts** e há possibilidade de testar se há erro ou o retorno.
+Utilizando sempre o conceito de blocos {  puts "Rodolfo" }. Caso você utilize parênteses ocorrerá um error, pois precisamos passar como bloco.
+
+```
+describe "Matcher output" do
+  it { expect{puts "Rodolfo"}.to output.to_stdout }
+  it { expect{ print "Rodolfo" }.to output("Rodolfo").to_stdout }
+  # Testando com expressão regular
+  it { expect{ puts "Rodolfo" }.to output(/Rodolfo/).to_stdout }
+
+
+  it { expect{warn "Rodolfo"}.to output.to_stderr }
+  it { expect{ warn "Rodolfo" }.to output("Rodolfo\n").to_stderr }
+  # Testando com expressão regular
+  it { expect{ warn "Rodolfo" }.to output(/Rodolfo/).to_stderr }
+end
+
+```
+
+#### Negativando Matchers
+
+*RSpec::Matchers.define_negated_matcher :an_array_excluding, :include*
+*RSpec::Matchers.define_negated_matcher :exclude, :include*
+
+Quando desejamos inverter o matcher, fazendo com que ele espere um valor "diferente"
+
+```
+RSpec::Matchers.define_negated_matcher :exclude, :include
+
+describe Array.new([1,2,3]), "Array" do
+    # include funciona para os elementos do array sepadamente
+    it "#include" do
+      expect(subject).to include(2)
+      expect(subject).to include(2,1)
+    end
+    # match_array funciona para verificar se o array existe, porém ele só trabalha com elementos exatos
+    # match_array = contain_exactly() [ alias ]
+    it "#match_array" do
+      expect(subject).to match_array([1,2,3])
+    end
+  
+    # contain_exactly funciona para verificar se o array existe, porém ele só trabalha com elementos exatos
+    # os elementos não precisam estar na mesma ordem.
+    # match_array = contain_exactly() [ alias ]
+    it "#contain_exactly" do
+      expect(subject).to contain_exactly(1,2,3)
+    end
+
+    it { expect(subject).to exclude(4) }  # esse array não deve conter o 4 
+  end
+```
+
+
+Você poderá adicionar o nome que desejar, como exemplo abaixo:
+
+```
+RSpec::Matchers.define_negated_matcher :nome_que_desejar, :be_within
+```
+
+
+```
+RSpec::Matchers.define_negated_matcher :be_not_within, :be_within
+
+describe 'be_within' do
+    it { expect(12.5).to be_within(0.5).of(12.0) } # A diferença máxima entre 12.5 e 12 tem que ser de 0.5
+    it { expect(11.4).to be_not_within(0.5).of(12.0) }
+    it { expect([12.6,12.9, 12.5]).to all(be_within(0.5).of(13.0))}
+    # Intervalo
+    # 0.5 é o delta
+    # Números aceitos: 11.5 à 12.5
+  end
+```
+
+
+#### Agregando falhas
+
+O RSpec verifica se tem um error na primeira expect, caso haja ele não mostra o seguinte. Porém há momentos que iremos precisar que seja mostrado todas as expects e seus erros.
+
+**aggregate_failures**
+
+```
+it 'teste' do
+  aggregate_failures do
+    code
+  end
+end
+```
+
+Exemplo:
+
+```
+  it 'be_between inclusive / Falhas agregadas' do
+    aggregate_failures do
+      expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+      expect(1).to be_between(2,7).inclusive
+      expect(8).to be_between(2,7).inclusive
+    end
+  end
+  
+    it 'be_between inclusive / Falhas agregadas', :aggregate_failures do
+        expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+        expect(1).to be_between(2,7).inclusive
+        expect(8).to be_between(2,7).inclusive
+    end
+
+  
+    it 'be_between inclusive / Falhas agregadas', aggregate_failures:true do
+        expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+        expect(1).to be_between(2,7).inclusive
+        expect(8).to be_between(2,7).inclusive
+    end
+```
+
+Caso deseje para todas as configurações, você poderá adicionar no spec_helper.rb
+
+```
+  config.define_derived_metadata do |meta| 
+    meta[:aggregate_failures] = true
+  end
+```
+
+
 ### Links diretos:
 
 

@@ -18,6 +18,28 @@ describe 'Matchers of Comparison' do
     expect(2).to be_between(2,7).inclusive
     expect(7).to be_between(2,7).inclusive
   end
+
+
+  # it 'be_between inclusive / Falhas agregadas' do
+  #   aggregate_failures do
+  #     expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+  #     expect(1).to be_between(2,7).inclusive
+  #     expect(8).to be_between(2,7).inclusive
+  #   end
+  # end
+  
+  #   it 'be_between inclusive / Falhas agregadas', :aggregate_failures do
+  #       expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+  #       expect(1).to be_between(2,7).inclusive
+  #       expect(8).to be_between(2,7).inclusive
+  #   end
+
+  
+  #   it 'be_between inclusive / Falhas agregadas', aggregate_failures:true do
+  #       expect(5).to be_between(2,7).inclusive # 2 e 7 contam
+  #       expect(1).to be_between(2,7).inclusive
+  #       expect(8).to be_between(2,7).inclusive
+  #   end
   it 'be_between exclusive' do
     expect(5).to be_between(2,7).exclusive # 2 e 7 não contam
     expect(3).to be_between(2,7).exclusive
