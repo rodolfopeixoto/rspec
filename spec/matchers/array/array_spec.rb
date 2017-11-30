@@ -1,4 +1,4 @@
-describe Array.new([1,2,3]), "Array" do
+describe Array.new([1,2,3]), "Array", collection: true do
   # include funciona para os elementos do array sepadamente
   it "#include" do
     expect(subject).to include(2)

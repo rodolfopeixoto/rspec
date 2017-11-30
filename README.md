@@ -1237,6 +1237,62 @@ end
 
 ```
 
+#### Tag Filters
+
+Terminal:
+
+```
+rspec . -t collection
+```
+
+Saída:
+
+```
+[1, 2, 3] Array
+  #include
+  #match_array
+  #contain_exactly
+
+[1, 7, 9] Array
+  should all be odd and be a kind of Integer
+  should all be a kind of String and include "r"
+
+Finished in 0.03787 seconds (files took 0.11055 seconds to load)
+5 examples, 0 failures
+```
+
+Basta adicionar o nome do filtro: collection e o valor true
+exemplo:
+
+```
+collection: true
+```
+
+```
+describe [1,7,9], "Array", collection: true do
+ it { is_expected.to all (be_odd).and be_an(Integer) }
+ it { expect(['ruby','rails']).to all(be_a(String).and include('r')) }
+end
+
+# Nas collection você o all para verificar se todas as colleções são alguma coisa.
+
+# Espera que todos os elementos sejam string e tenha a letra r em qualquer lugar.
+# it { expect(['ruby','rails']).to all(be_a(String).and include('r')) }
+
+```
+
+Negando filtro.
+
+Terminal:
+
+```
+ rspec . -t ~collection
+```
+
+#### Testes doubles
+
+
+
 ### Links diretos:
 
 
