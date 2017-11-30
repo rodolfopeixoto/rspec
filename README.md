@@ -1112,6 +1112,130 @@ Caso deseje para todas as configurações, você poderá adicionar no spec_helpe
   end
 ```
 
+## shared examples
+
+**send** and **capitalize** 
+O send envia uma mensagem para o objeto. Exemplo:
+
+```
+x = "Rodolfo"
+y = "size"
+x.send(y)
+>> 7
+x.size
+>> 7
+```
+
+O shared examples é utilizado para reutilizar código.
+
+Criando um código dinâmico, veja a diferença com shared_examples e com:
+
+```
+require 'person'
+
+describe "Person" do
+  subject(:person) { Person.new }
+  
+  it '#happy!' do
+    person.happy!
+    expect(person.status).to eq('Felling happy!')
+  end
+
+  it '#said!' do
+    person.said!
+    expect(person.status).to eq('Felling said!')
+  end
+
+  it '#content!' do
+    person.content!
+    expect(person.status).to eq('Felling content!')
+  end
+end
+
+
+```
+
+Métodos para chamar o shared_examples
+include_examples "name"
+it_behaves_like "name"
+it_should_behave_like "name"
+
+
+
+**Pasta**: shared_examples/shared_examples.rb
+
+
+```
+require 'person'
+
+shared_examples 'status' do |felling|
+  it '#{felling}!' do
+    person.send("#{felling}!")
+    expect(person.status).to eq("Felling #{felling.capitalize}!")
+  end
+end
+
+describe "Person" do
+  subject(:person) { Person.new }
+  
+  it_behaves_like 'status', :happy
+  it_behaves_like 'status', :said
+  it_behaves_like 'status', :content
+
+end
+
+
+```
+
+
+**Pasta**: person.rb
+
+```
+class Person
+  attr_accessor :name, :age
+  attr_reader :status
+
+  def happy!
+    @status = "Felling Happy!"
+  end
+
+  def said!
+    @status = "Felling Said!"
+  end
+
+  def content!
+    @status = "Felling Content!"
+  end
+end
+
+```
+
+#### Customizando os matchers
+
+```
+RSpec::Matchers.define :be_a_multiple_of do |expected|
+  #expected é igual ao 3
+  # bloco match ele testará o que desejamos.
+  # Atual é igual a 18
+  match do |actual|
+    actual % expected == 0
+  end
+
+  # customização da falha
+  failure_message do |actual|
+    "expected that #{actual} would be a multiple of #{expected}"
+  end
+
+  description do
+    "be a multiple of #{expected} <<<<<"
+  end
+end
+
+describe 18, 'Custom Matchers' do
+  it { is_expected.to be_a_multiple_of(3) }
+end
+
+```
 
 ### Links diretos:
 
