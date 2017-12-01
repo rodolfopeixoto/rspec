@@ -1291,6 +1291,181 @@ Terminal:
 
 #### Testes doubles
 
+Criação de um objeto fake·
+
+```
+describe "Test Double" do
+  it '--' do
+    user = double('User')
+    # allow(user).to receive_messages(name: 'Rodolfo', password: 'secret')
+    allow(user).to receive(:name).and_return('Rodolfo')
+    allow(user).to receive(:password).and_return('secret')
+    user.name
+    user.password
+  end
+end
+
+
+```
+
+
+#### STUBS
+
+Um stub nada mais é do que forçar uma resposta específica para um determinado método de um objeto colaborador.
+
+```
+require 'student'
+require 'course'
+
+describe 'Stub' do
+  it '#has_finished?' do
+    student = Student.new
+    course = Course.new
+
+    # allow(student) = Permite fazer o stub. Criar um fake
+    # receive(:has_finished?)
+    # an_instance_of(Course) class
+    allow(student).to receive(:has_finished?).with(an_instance_of(Course)).and_return(true)    
+    
+    course_finished = student.has_finished?(course)
+    
+    expect(course_finished).to be true
+  end
+end
+
+```
+
+
+**with** restrição de argumento como no exemplo passando uma Classe do tipo curso
+
+#### Argumentos dinâmicos
+
+```
+
+  it 'Qualquer instância de classe' do
+    student = Student.new
+    other_student = Student.new
+  
+    allow_any_instance_of(Student).to receive(:bar).and_return(true)
+
+    expect(student.bar).to be true
+    expect(other_student.bar).to be true
+
+  end
+
+  it 'Erros' do
+    student = Student.new
+    other_student = Student.new
+  
+    allow(student).to receive(:bar).and_raise(RuntimeError)
+
+    expect{student.bar}.to raise_error(RuntimeError)
+
+  end
+```
+
+ O Stubs são para a fase de Setup. Stubs são usados para substituir estados.
+
+ # Mock
+É para a fase de verify. O mocks são usados para testar comportamentos 
+
+
+```
+require 'student'
+require 'course'
+
+
+describe 'Mocks' do
+  it '#bar?' do
+    student = Student.new
+    course  = Course.new
+
+    # allow(student) = Permite fazer o stub. Criar um fake
+    # receive(:has_finished?) método
+    # an_instance_of(Course) class (parâmetros)
+    allow(student).to receive(:has_finished?).with(an_instance_of(Course)).and_return(true)    
+    
+    #setup
+    course_finished = student.has_finished?(course)
+    
+    # verify
+    expect(student).to receive(:bar)
+
+    # exercise
+    student.bar
+  end
+
+  it 'args' do
+    student = Student.new
+    expect(student).to receive(:foo).with(1234)
+    student.foo(1234)
+  end
+
+  it 'Repetição de métodos' do
+    student = Student.new
+    expect(student).to receive(:foo).with(1234).twice
+    student.foo(1234)
+    student.foo(1234)
+  end
+
+  it 'Retorno fake' do
+    student = Student.new
+    expect(student).to receive(:foo).with(1234).and_return(true) # with(1234).and_return(true) ele retorn o valor que você colocar no and_return
+    student.foo(true)
+  end
+end
+```
+
+
+#### Método AS NULL OBJECT
+
+Caso apareça uma mensagem de error, basta adicionar o null_object e irá ignorar a mensagem
+
+```
+require 'student'
+require 'course'
+
+
+describe 'Mocks' do
+  it '#bar?' do
+    student = Student.new
+    course  = Course.new
+
+    # allow(student) = Permite fazer o stub. Criar um fake
+    # receive(:has_finished?) método
+    # an_instance_of(Course) class (parâmetros)
+    allow(student).to receive(:has_finished?).with(an_instance_of(Course)).and_return(true)    
+    
+    #setup
+    course_finished = student.has_finished?(course)
+    
+    # verify
+    expect(student).to receive(:bar)
+
+    # exercise
+    student.bar
+  end
+
+  it 'args' do
+    student = Student.new
+    expect(student).to receive(:foo).with(1234)
+    student.foo(1234)
+  end
+
+  it 'Repetição de métodos' do
+    student = Student.new
+    expect(student).to receive(:foo).with(1234).twice
+    student.foo(1234)
+    student.foo(1234)
+  end
+
+  it 'Retorno fake' do
+    student = Student.new
+    expect(student).to receive(:foo).with('1234').and_return(true) # with(1234).and_return(true) ele retorn o valor que você colocar no and_return
+    student.foo('1234')
+  end
+end
+```
 
 
 ### Links diretos:
